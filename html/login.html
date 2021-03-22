@@ -3,7 +3,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/CSS/style.css">
     <title>PokeBank</title>
 </head>
 <body>
@@ -40,7 +40,7 @@
             <div class="form sign-up">
                 <h2>Sign Up</h2>
                 <label>
-                    <span>Name</span>
+                    <span>Nombre Entrenador</span>
                     <input type="text">
                 </label>
                 <label>
@@ -48,7 +48,7 @@
                     <input type="email">
                 </label>
                 <label>
-                    <span>Username</span>
+                    <span>Pokename</span>
                     <input type="username">
                 </label>
                 <label>
@@ -64,6 +64,12 @@
         </div>
     </div>
     
-    <script type="text/javascript" src="/scripts/script.js"></script>
+    <script type="text/javascript">
+    document.querySelector('.img-btn').addEventListener('click', function()
+{
+    document.querySelector('.cont').classList.toggle('s-signup');
+}
+);
+</script>
 </body>
 </html>
