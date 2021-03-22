@@ -19,11 +19,11 @@ Se recomienda instalar Visual Code para poder abrir un Live Server desde la exte
 ## Estructura de PokeBank
 ### CSS
 Cuenta con dos archivos .css, uno para la pantalla principal (login y creacion de usuarios) y el otro para la pantalla de las transacciones.
-### fonts
+### Fonts
 Se descargó un font custom que permite darle vida a las letras del sitio al estilo de Pokemon.
-### html
+### HTML
 Contiene las dos páginas del sitio. Cada una con sus caracteristicas y funcionalidades muy propias.
-### resources
+### Resources
 Contiene cualquier otro tipo de archivos que son necesarios para el funcionamiento del sitio (en este caso, imágenes)
-### scripts
+### Scripts
 Contiene 2 archivos .js donde estan las funciones a ejecutarse en nuestro sitio. La separacion en 2 archivos es para poder usar funciones especificas y propias de las paginas.
