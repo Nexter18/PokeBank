@@ -8,11 +8,11 @@
 </head>
 <body>
     <div class="cont">
-        <div class="form">
+        <div id="sign" class="form">
             <h2>Bienvenido Entrenador!</h2>
             <label>
                 <span>Usuario</span>
-                <input type="usename" name="usename">
+                <input type="text" name="usename">
             </label>
             <label>
                 <span>PokeCode</span>
@@ -37,39 +37,44 @@
                     <span class="m-in">Sign In</span>
                 </div>
             </div>
-            <div class="form sign-up">
+            <div id="signup" class="form sign-up">
                 <h2>Sign Up</h2>
                 <label>
                     <span>Nombre Entrenador</span>
-                    <input type="text">
+                    <input id="name" type="text">
                 </label>
+                <div class="col-sm-4 messages"></div>
                 <label>
                     <span>Email</span>
-                    <input type="email">
+                    <input id="email" type="email">
                 </label>
+                <div class="col-sm-4 messages"></div>
+                <label>
+                    <span>Fecha de cumpleaños</span>
+                    <input id="birthdate" class="form-control" type="date" placeholder="YYYY-MM-DD" name="birthdate">
+                </label>
+                <div class="col-sm-4 messages"></div>
                 <label>
                     <span>Pokename</span>
-                    <input type="username">
+                    <input id="username" type="text">
                 </label>
+                <div class="col-sm-4 messages"></div>
                 <label>
                     <span>PokeCode</span>
-                    <input type="password">
+                    <input id="password" type="password">
                 </label>
+                <div class="col-sm-4 messages"></div>
                 <label>
                     <span>Confirmar PokeCode</span>
-                    <input type="password">
+                    <input id="password" type="password">
                 </label>
-                <button type="button" class="submit">Sing Up!</button>
+                <div class="col-sm-4 messages"></div>
+                <button type="submit" class="submit">Sing Up!</button>
             </div>
         </div>
     </div>
-    
-    <script type="text/javascript">
-    document.querySelector('.img-btn').addEventListener('click', function()
-{
-    document.querySelector('.cont').classList.toggle('s-signup');
-}
-);
-</script>
+    <script type="text/javascript" src="/Scripts/LoginScript.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/validate.js/0.13.1/validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
 </body>
 </html>
