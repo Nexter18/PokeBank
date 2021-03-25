@@ -4,6 +4,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PokeBank-Account</title>
+    <link rel="stylesheet" href="/CSS/mainpage.css">
 </head>
 <body>
     <h1>Bienvenido <a id="username"></a></h1>
@@ -11,13 +12,45 @@
     <div id="balance_info">
         <p>Please enter your starting balances below.</p>
         <form id="balance_form">
+            Checking Balance:<br>
+            <input type="number" name="checking_balance" id="checking_balance" class="enter_balance"><br>
             Savings Balance:<br>
             <input type="number" name="savings_balance" id="savings_balance" class="enter_balance"><br><br>
             <input type="button" value="Submit" id="submit_balance" form="balance_form">
         </form>
     </div>
     <div class="row">
-        <div class="bank" id="savings_info">
+        <div class="bank" id="checking_info">
+            <h2>Checking Account</h2>
+            <p id="current_checking_balance">Current Balance: </p>
+            <div id="enter_transaction">
+                <form id="transaction_form">
+                    Amount:<br>
+                    <input type="number" name="transaction_amount" id="transaction_amount" class="transaction"><br>
+                    <div id="desc">
+                        Description:<br>
+                        <input type="text" name="transaction_description" id="transaction_description" class="transaction"><br>
+                    </div>
+                    <select name="transaction_type" id="transaction_type" class="trans_type">
+                        <option value="Debit">Debit</option>
+                        <option value="Deposit">Deposit</option>
+                        <option value="Withdraw">Withdraw</option>
+                        <option value="Transfer">Transfer</option>
+                    </select>
+                    <input type="button" value="Submit" id="submit_transaction" form="transaction_form" class="submit_trans">
+                </form>
+                <br>
+            </div>
+            <table id="trans_table">
+                <tr class="top_of_table">
+                    <th>Transaction Type</th>
+                    <th>Descripton</th>
+                    <th>Amount</th>
+                    <th>Balance</th>
+                </tr>
+            </table>
+        </div>
+            <div class="bank" id="savings_info">
             <h2>Savings Account</h2>
             <p id="current_savings_balance">Current Balance: </p>
             <div id="enter_transaction_savings">
@@ -43,7 +76,8 @@
             </table>
         </div>
     </div>
-
-    <script type="text/javascript" src="/Scripts/MainScript.js"></script>
+    
 </body>
 </html>
+
+<script type="text/javascript" src="/Scripts/MainScript.js"></script>
