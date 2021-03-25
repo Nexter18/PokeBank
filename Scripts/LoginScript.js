@@ -6,6 +6,13 @@ document.querySelector('.img-btn').addEventListener('click', function()
 }
 );
 
+function Main_App()
+{
+    
+     location.href = "/HTML/main.html";
+} 
+
+
 //moment.js with validate.js for user input
 (function(){
     validate.extend(validate.validators.datetime, {
