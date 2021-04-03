@@ -1,3 +1,22 @@
+.card{
+    min-height: 82vh;
+}
+.form-group{
+      margin: 0 0;
+}
+.md-form{
+    margin: 16px 0;
+}
+.help-block.error {
+      margin-bottom: 5px;
+}
+.has-error label{
+      color: #ff3547 !important;
+}
+.has-error input.form-control{
+      border-bottom-color: #ff3547 !important;
+}
+
 @font-face {
     font-family:"PokemonSolid";
     src: url("/fonts/PokemonSolid.ttf") format("truetype");
@@ -40,7 +59,7 @@ input, button{
 
 .form{
     position: relative;
-    width: 640px;
+    width: 500px;
     height: 100%;
     padding: 50px 30px;
     -webkit-transition: -webkit-transform 1.2s ease-in-out;
@@ -78,7 +97,7 @@ input{
     padding-bottom: 5px;
     border-bottom: 1px solid rgba(109,93,9,0.4);
     text-align: center;
-    font-family: 'PokemonSolid', sans-serif;
+    /* font-family: 'PokemonSolid', sans-serif; */
 }
 
 button{

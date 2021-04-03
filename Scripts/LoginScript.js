@@ -6,11 +6,11 @@ document.querySelector('.img-btn').addEventListener('click', function()
 }
 );
 
-function Main_App()
-{
+// function Main_App()
+// {
     
-     location.href = "/HTML/main.html";
-} 
+//      location.href = "/HTML/main.html";
+// } 
 
 
 //moment.js with validate.js for user input
@@ -54,13 +54,13 @@ var constraints = {
           // Input we want it to be equal to
           attribute: "password",
           // Error message if passwords don't match
-          message: "^The passwords does not match"
+          message: "^Las contraseñas no coinciden"
         }
     },
       username: {
         // You need to pick a username
         presence: true,
-        // It must be between 3 and 20 characters long
+        // It must be between 6 and 20 characters long
         length: {
           minimum: 6,
           maximum: 20
@@ -70,7 +70,7 @@ var constraints = {
           pattern: "[a-z0-9]+",
           // We don't care if the username is uppercase or lowercase
           flags: "i",
-          message: "can only contain a-z and 0-9"
+          message: "Solo puede contener 0-9 y a-z"
         }
     },
       birthdate: {
@@ -84,8 +84,8 @@ var constraints = {
     }
 };
 
-var form = document.querySelector("form sign-up#singup");
-  form.addEventListener("click", function(ev) {
+var form = document.querySelector("form#signup");
+  form.addEventListener("submit", function(ev) {
     ev.preventDefault();
     handleFormSubmit(form);
   });
@@ -120,7 +120,7 @@ for (var i = 0; i < inputs.length; ++i) {
   // Function that shows the errors for a specific input
 function showErrorsForInput(input, errors) {
     // This is the root of the input
-    var formGroup = closestParent(input.parentNode, "form sign-up")
+    var formGroup = closestParent(input.parentNode, "form-group")
       // Find where the error messages will be insert into
       , messages = formGroup.querySelector(".messages");
     // First we remove any old messages and resets the classes
