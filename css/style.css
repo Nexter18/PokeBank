@@ -68,6 +68,11 @@ input, button{
     transition: transform 1.2s ease-in-out, -webkit-transform 1.2s ease-in-out;
 }
 
+.messages{
+    font-size: 16px;
+    font-family: sans-serif;
+}
+
 h2{
     width: 100%;
     font-size: 30px;
@@ -80,6 +85,7 @@ label{
     width: 260px;
     margin: 25px auto;
     text-align: center;
+    
 }
 
 label span{

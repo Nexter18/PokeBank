@@ -12,7 +12,6 @@ document.querySelector('.img-btn').addEventListener('click', function()
 //      location.href = "/HTML/main.html";
 // } 
 
-
 //moment.js with validate.js for user input
 (function(){
     validate.extend(validate.validators.datetime, {
@@ -180,5 +179,19 @@ function addError(messages, error) {
   function showSuccess() {
     // Action to execute if the form is valid.
     alert("Success!");
+    localStorage.setItem("username", document.getElementById("username").value);
+    localStorage.setItem("pokecode", document.getElementById("password").value);
   }
 })();
+
+function login(){
+  const user = document.getElementById("username").value
+  const code = document.getElementById("password").value
+  if (user === localStorage.getItem("username") && code === localStorage.getItem("pokecode")) {
+    swal("Good job!", "You clicked the button!", "success");
+    location.href = "/HTML/main.html"
+  }
+  else{
+    swal("Oops", "La combinacion no es correcta, intenta nuevamente", "error");
+  }
+}
