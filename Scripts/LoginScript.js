@@ -192,10 +192,13 @@ function addError(messages, error) {
   }
 })();
 
+//Login fuction validation on Local Storage
 function login(){
-  const user = document.getElementById("username").value
-  const code = document.getElementById("password").value
-  if (user === localStorage.getItem("username") && code === localStorage.getItem("pokecode")) {
+  const user = document.getElementById("usernamesign").value;
+  const code = document.getElementById("passwordsign").value;
+  const username = localStorage.getItem("username");
+  const pokecode = localStorage.getItem("pokecode");
+  if (user === username && code === pokecode) {
     swal("Good job!", "You clicked the button!", "success");
     location.href = "/HTML/main.html"
   }
