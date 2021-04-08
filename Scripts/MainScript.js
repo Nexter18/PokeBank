@@ -1,6 +1,4 @@
-var username = " Fulanito";
-
-document.getElementById("username").innerHTML = username;
+document.getElementById("username").innerHTML = localStorage.getItem("username");;
 
 const transactions = document.querySelector("#enter_transaction")
 const transactionsSavings = document.querySelector("enter_transaction_savings");
@@ -9,12 +7,18 @@ const transactionTypeSavings = document.querySelector("#transaction_type_savings
 const transAmount = document.querySelector("#transaction_amount");
 const transAmountSavings = document.querySelector("#transaction_amount_savings");
 const transDescription = document.querySelector("#transaction_description");
+const transDescriptionSavings = document.querySelector("#transaction_description_savings");
 const table = document.querySelector("#trans_table");
 const tableSavings =  document.querySelector("#trans_table_savings");
 const desc = document.querySelector("#desc");
+const descs = document.querySelector("#descs");
 const checkingStartingBalance = document.querySelector("#checking_balance");
 const savingsStartingBalance = document.querySelector("#savings_balance");
 const balanceInfo = document.querySelector("#balance_info");
+
+function logout(){
+    location.href = "/HTML/login.html"
+}
 
 let checkingAccount = {
     // Checking account.
@@ -56,6 +60,14 @@ let checkingAccount = {
             amount: amount,
             purpose: "transfer",
         })
+    },
+    payment: function (amount,purpose) {
+        this.balance -= amount;
+        this.allTransactions.push({
+            type: "payment",
+            amount: amount,
+            purpose: purpose,
+        });
     }
 }
 
@@ -99,6 +111,14 @@ let savingsAccount = {
             amount: amount,
             purpose: "transfer",
         })
+    },
+    payment: function (amount,purpose) {
+        this.balance -= amount;
+        this.allTransactions.push({
+            type: "payment",
+            amount: amount,
+            purpose: purpose,
+        });
     }
 }
 
@@ -134,7 +154,7 @@ function printTable(tableId, account, transferMessage) {
 
 function mainBankChecking() {
     // Checks which transaction button is selected and executes correct function.
-    if (transactionType.value === "Debit") {
+    if (transactionType.value === "Debit" || transactionType.value === "Payment") {
         runDebitChecking();
         transDescription.value = "";
         transAmount.value = "";
@@ -152,7 +172,11 @@ function mainBankChecking() {
 
 function mainBankSavings() {
     // Checks which transaction button is selected and executes correct function.
-    if (transactionTypeSavings.value === "Deposit") {
+    if (transactionTypeSavings.value === "Payment") {
+        runPaymentSavings();
+        transDescriptionSavings.value = "";
+        transAmountSavings.value = "";
+    } else if (transactionTypeSavings.value === "Deposit") {
         runDepositSavings();
         transAmountSavings.value = "";
     } else if (transactionTypeSavings.value === "Withdraw") {
@@ -169,16 +193,16 @@ function runDebitChecking() {
     let howMuch = Number.parseFloat(transAmount.value);
     let forWhat = transDescription.value;
     if (isNaN(howMuch)) {
-        alert("Enter Amount");
+        alert("Ingrese la cantidad");
         } else if (howMuch <= 0) {
-           alert("Enter positive number.");
+           alert("Ingrese numeros positivos.");
         } else {
             if (checkingAccount.balance >= howMuch) {
                 checkingAccount.debit(howMuch, forWhat);
                 displayAccountBalances();
                 printTable(table, checkingAccount);
             } else {
-                alert("Not enough funds for transaction.")
+                alert("No tiene fondos suficientes para realizar el pago.")
             }
         }
 }
@@ -187,9 +211,9 @@ function runDepositChecking() {
     // Checking deposit.
     let howMuch = Number.parseFloat(transAmount.value);
     if (isNaN(howMuch)) {
-        alert("Enter Amount");
+        alert("Ingrese la cantidad");
         } else if (howMuch <= 0) {
-            alert("Enter positive number.")
+            alert("Ingrese numeros positivos.")
         } else {
             checkingAccount.deposit(howMuch);
             displayAccountBalances();
@@ -201,9 +225,9 @@ function runDepositSavings() {
     // Savings deposit.
     let howMuch = Number.parseFloat(transAmountSavings.value);
     if (isNaN(howMuch)) {
-        alert("Enter Amount");
+        alert("Ingrese la cantidad");
         } else if (howMuch <= 0) {
-            alert("Enter positive number.")
+            alert("Ingrese numeros positivos.")
         } else {
             savingsAccount.deposit(howMuch);
             displayAccountBalances(); 
@@ -215,16 +239,16 @@ function runWithdrawChecking() {
     // Checking withdrawal.
     let howMuch = Number.parseFloat(transAmount.value);
     if (isNaN(howMuch)) {
-        alert("Enter Amount");
+        alert("Ingrese la cantidad");
         } else if (howMuch <= 0) {
-            alert("Enter positive number.");
+            alert("Ingrese numeros positivos.");
         } else {
             if (checkingAccount.balance >= howMuch) {
                 checkingAccount.withdraw(howMuch);
                 displayAccountBalances();
                 printTable(table, checkingAccount);
             } else {
-                alert("Not enough funds for transaction.")
+                alert("No tiene fondos suficientes para realizar el pago.")
             }
     }  
 }
@@ -233,16 +257,16 @@ function runWithdrawSavings() {
     // Savings withdrawal.
     let howMuch = Number.parseFloat(transAmountSavings.value);
     if (isNaN(howMuch)) {
-        alert("Enter Amount");
+        alert("Ingrese la cantidad");
         } else if (howMuch <= 0) {
-            alert("Enter positive number.");
+            alert("Ingrese numeros positivos.");
         } else {
             if (savingsAccount.balance >= howMuch) {
                 savingsAccount.withdraw(howMuch);
                 displayAccountBalances();
                 printTable(tableSavings, savingsAccount);
             } else {
-                alert("Not enough funds for transaction.")
+                alert("No tiene fondos suficientes para realizar el pago.")
             }
     }  
 }
@@ -251,9 +275,9 @@ function runTransferChecking() {
     // Transfer Checking to Savings.
     let howMuch = Number.parseFloat(transAmount.value);
     if (isNaN(howMuch)) {
-        alert("Enter Amount");
+        alert("Ingrese la cantidad");
         } else if (howMuch <= 0) {
-            alert("Enter positive number.");
+            alert("Ingrese numeros positivos.");
         } else {
             if (checkingAccount.balance >= howMuch) {
                 checkingAccount.transfer(howMuch, savingsAccount);
@@ -261,7 +285,7 @@ function runTransferChecking() {
                 printTable(table, checkingAccount, "Transfer to Savings");
                 printTable(tableSavings, savingsAccount, "Transfer from Checking");
             } else {
-                alert("Not enough funds for transaction.")
+                alert("No tiene fondos suficientes para realizar el pago.")
             }
     }  
 }
@@ -270,9 +294,9 @@ function runTransferSavings() {
     // Transfer Savings to Checking.
     let howMuch = Number.parseFloat(transAmountSavings.value);
     if (isNaN(howMuch)) {
-        alert("Enter Amount");
+        alert("Ingrese la cantidad");
         } else if (howMuch <= 0) {
-            alert("Enter positive number.");
+            alert("Ingrese numeros positivos.");
         } else {
             if (savingsAccount.balance >= howMuch) {
                 savingsAccount.transfer(howMuch, checkingAccount);
@@ -280,15 +304,53 @@ function runTransferSavings() {
                 printTable(tableSavings, savingsAccount, "Transfer to Checking");
                 printTable(table, checkingAccount, "Transfer from Savings");
             } else {
-                alert("Not enough funds for transaction.")
+                alert("No tiene fondos suficientes para realizar el pago.")
             }
     }  
 }
 
+function runPaymentChecking() {
+    // Checking payment.
+    let howMuch = Number.parseFloat(transAmount.value);
+    let forWhat = transDescription.value;
+    if (isNaN(howMuch)) {
+        alert("Ingrese la cantidad");
+        } else if (howMuch <= 0) {
+           alert("Ingrese numeros positivos.");
+        } else {
+            if (checkingAccount.balance >= howMuch) {
+                checkingAccount.debit(howMuch, forWhat);
+                displayAccountBalances();
+                printTable(table, checkingAccount, "Pago realizado con exito");
+            } else {
+                alert("No tiene suficientes fondos para el pago.")
+            }
+        }
+}
+
+function runPaymentSavings() {
+    // Savings payment.
+    let howMuch = Number.parseFloat(transAmountSavings.value);
+    let forWhat = transDescriptionSavings.value;
+    if (isNaN(howMuch)) {
+        alert("Ingrese la cantidad");
+        } else if (howMuch <= 0) {
+           alert("Ingrese numeros positivos.");
+        } else {
+            if (savingsAccount.balance >= howMuch) {
+                savingsAccount.debit(howMuch,forWhat);
+                displayAccountBalances();
+                printTable(tableSavings, savingsAccount, "Pago realizado con exito");
+            } else {
+                alert("No tiene suficientes fondos para el pago.")
+            }
+        }
+}
+
 function displayAccountBalances () {
     // Displays current balance of both accounts.
-    document.querySelector("#current_checking_balance").textContent = "Current Balance: $" + checkingAccount.balance;
-    document.querySelector("#current_savings_balance").textContent = "Current Balance: $" + savingsAccount.balance;
+    document.querySelector("#current_checking_balance").textContent = "Balance Actual: $" + checkingAccount.balance;
+    document.querySelector("#current_savings_balance").textContent = "Balance Actual: $" + savingsAccount.balance;
 }
 
 function getStartingBalance() {
@@ -298,7 +360,7 @@ function getStartingBalance() {
     let checkFixed = parseFloat(checkStart.toFixed(2));
     let saveFixed = parseFloat(saveStart.toFixed(2));
     if (isNaN(checkStart) || isNaN(saveStart)) {
-        alert("Enter starting balance.")
+        alert("Ingrese el balance inicial.")
     } else {
         checkingAccount.balance = checkFixed;
         savingsAccount.balance = saveFixed;
@@ -318,7 +380,7 @@ function clearBox(elementID) {
 
 function checkTransType() {
     // Checks transaction type. If debit it then shows description box. If not debit it hides box.
-    if (transactionType.value === "Debit") {
+    if (transactionType.value === "Debit" || transactionType.value === "Payment") {
         desc.style.display = "block";
         transDescription.value = "";
     } else if (transactionType.value === "Deposit") {
@@ -330,6 +392,21 @@ function checkTransType() {
     }
 }
 
+function checkTransTypeSavings() {
+    // Checks transaction type. If debit it then shows description box. If not debit it hides box.
+    if (transactionTypeSavings.value === "Payment") {
+        desc.style.display = "block";
+        transDescriptionSavings.value = "";
+    } else if (transactionTypeSavings.value === "Deposit") {
+        desc.style.display = "none";
+    } else if (transactionTypeSavings.value === "Withdraw") {
+        desc.style.display = "none";
+    } else if (transactionTypeSavings.value === "Transfer") {
+        desc.style.display = "none";
+    }
+}
+
+
 function hideToggle(itemToHide) {
     // Toggle to hide items.
     if (itemToHide.style.display === "none") {
@@ -340,7 +417,7 @@ function hideToggle(itemToHide) {
 }
 
 function validate(event) {
-    // Limits input boxes to .00 decimal places. Use this function oninput for input boxess in html.
+    // Limits input boxes to .00 decimal places.
     let x = this.value;
     this.value = (x.indexOf(".") >= 0) ? (x.substr(0, x.indexOf(".")) + x.substr(x.indexOf("."), 3)) : x;
 }
@@ -357,3 +434,4 @@ document.querySelector("#submit_transaction_savings").addEventListener("click", 
     mainBankSavings();
 });
 transactionType.addEventListener("click", checkTransType);
+transactionTypeSavings.addEventListener("click", checkTransTypeSavings);

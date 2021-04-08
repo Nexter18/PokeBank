@@ -7,35 +7,43 @@
     <link rel="stylesheet" href="/CSS/mainpage.css">
 </head>
 <body>
-    <h1>Bienvenido <a id="username"></a></h1>
+    <div class="welcome">
+        <h1>Bienvenido <a id="username"></a></h1>
+    </div>
+
+    <div class="close">
+        <p onclick="logout()">Cerrar Sesion</p>
+    </div>
+    
 
     <div id="balance_info">
-        <p>Please enter your starting balances below.</p>
+        <p>Porfavor ingrese sus balances iniciales.</p>
         <form id="balance_form">
-            Checking Balance:<br>
+            Balance cuenta chequera:<br>
             <input type="number" name="checking_balance" id="checking_balance" class="enter_balance"><br>
-            Savings Balance:<br>
+            Balance cuenta de ahorros:<br>
             <input type="number" name="savings_balance" id="savings_balance" class="enter_balance"><br><br>
             <input type="button" value="Submit" id="submit_balance" form="balance_form">
         </form>
     </div>
     <div class="row">
         <div class="bank" id="checking_info">
-            <h2>Checking Account</h2>
-            <p id="current_checking_balance">Current Balance: </p>
+            <h2>Cuenta Chequera</h2>
+            <p id="current_checking_balance">Balance Actual: </p>
             <div id="enter_transaction">
                 <form id="transaction_form">
-                    Amount:<br>
+                    Cantidad:<br>
                     <input type="number" name="transaction_amount" id="transaction_amount" class="transaction"><br>
                     <div id="desc">
-                        Description:<br>
+                        Descripcion:<br>
                         <input type="text" name="transaction_description" id="transaction_description" class="transaction"><br>
                     </div>
                     <select name="transaction_type" id="transaction_type" class="trans_type">
-                        <option value="Debit">Debit</option>
-                        <option value="Deposit">Deposit</option>
-                        <option value="Withdraw">Withdraw</option>
-                        <option value="Transfer">Transfer</option>
+                        <option value="Debit">Debito</option>
+                        <option value="Deposit">Deposito</option>
+                        <option value="Withdraw">Retiro</option>
+                        <option value="Transfer">Transferencia</option>
+                        <option value="Payment">Pago</option>
                     </select>
                     <input type="button" value="Submit" id="submit_transaction" form="transaction_form" class="submit_trans">
                 </form>
@@ -43,24 +51,29 @@
             </div>
             <table id="trans_table">
                 <tr class="top_of_table">
-                    <th>Transaction Type</th>
-                    <th>Descripton</th>
-                    <th>Amount</th>
+                    <th>Tipo de transaccion</th>
+                    <th>Descripcion</th>
+                    <th>Cantidad</th>
                     <th>Balance</th>
                 </tr>
             </table>
         </div>
             <div class="bank" id="savings_info">
-            <h2>Savings Account</h2>
+            <h2>Cuenta de Ahorros</h2>
             <p id="current_savings_balance">Current Balance: </p>
             <div id="enter_transaction_savings">
                 <form id="transaction_form_savings">
-                    Amount:<br>
+                    Cantidad:<br>
                     <input type="number" name="transaction_amount" id="transaction_amount_savings" class="transaction"><br>
+                    <div id="descs">
+                        Descripcion:<br>
+                        <input type="text" name="transaction_description_savings" id="transaction_description_savings" class="transaction"><br>
+                    </div>
                     <select name="transaction_type" id="transaction_type_savings" class="trans_type">
-                        <option value="Deposit">Deposit</option>
-                        <option value="Withdraw">Withdraw</option>
-                        <option value="Transfer">Transfer</option>
+                        <option value="Deposit">Deposito</option>
+                        <option value="Withdraw">Retiro</option>
+                        <option value="Transfer">Transferencia</option>
+                        <option value="Payment">Pago</option>
                     </select>
                     <input type="button" value="Submit" id="submit_transaction_savings" form="transaction_form" class="submit_trans">
                 </form>
@@ -68,9 +81,9 @@
             </div>
             <table id="trans_table_savings">
                 <tr class="top_of_table">
-                    <th>Transaction Type</th>
-                    <th>Descripton</th>
-                    <th>Amount</th>
+                    <th>Tipo de transaccion</th>
+                    <th>Descripcion</th>
+                    <th>Cantidad</th>
                     <th>Balance</th>
                 </tr>
             </table>

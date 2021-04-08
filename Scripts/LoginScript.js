@@ -6,12 +6,6 @@ document.querySelector('.img-btn').addEventListener('click', function()
 }
 );
 
-// function Main_App()
-// {
-    
-//      location.href = "/HTML/main.html";
-// } 
-
 //moment.js with validate.js for user input
 (function(){
     validate.extend(validate.validators.datetime, {
@@ -43,6 +37,13 @@ var constraints = {
         // Is password at least 4 characters long?
         length: {
           maximum: 4
+        },
+        format: {
+          // We only a-z and 0-9
+          pattern: "[0-9]+",
+          // We don't care if the username is uppercase or lowercase
+          flags: "i",
+          message: "Solo puede contener 0-9"
         }
     },
       "confirm-password": {
@@ -54,6 +55,13 @@ var constraints = {
           attribute: "password",
           // Error message if passwords don't match
           message: "^Las contraseñas no coinciden"
+        },
+        format: {
+          // We only 0-9
+          pattern: "[0-9]+",
+          // We don't care if the username is uppercase or lowercase
+          flags: "i",
+          message: "Solo puede contener 0-9"
         }
     },
       username: {
