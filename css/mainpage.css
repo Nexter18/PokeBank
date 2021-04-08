@@ -8,6 +8,10 @@
     src: url("/fonts/PokemonHollow.ttf") format("truetype");
 }
 
+body{
+    background-image: url("/resources/2-27114_pokemon-bank-logo.png");
+}
+
 .welcome h1{
 font-size: 30px;
 font-family: 'PokemonSolid', sans-serif;

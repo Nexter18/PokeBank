@@ -1,6 +1,6 @@
 # PokeBank
 Este repositorio contiene los archivos que conforman PokeBank.
-## Requirimientos
+## Requerimientos
 ### Instalar editor de texto
 Se recomienda instalar Visual Code para poder abrir un Live Server desde la extension de la app, para que de esa manera el sitio se levante mediante los archivos .html del repositorio.
 #### Windows
