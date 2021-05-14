@@ -1,3 +1,69 @@
+function logout(){
+    location.href = "/HTML/login.html"
+}
+
+function printPDF(){
+    var doc = new jsPDF('p','pt', 'a4', true);
+    var table = tableToJson($('#trans_table').get(0))
+    var table_savings = tableToJson($('#trans_table_savings').get(0))
+    doc.cellInitialize();
+    $.each(table, table_savings, function (i, row){
+        console.debug(row);
+        $.each(row, function (j, cell){
+            doc.cell(10, 50,120, 50, cell, i);  // 2nd parameter=top margin,1st=left margin 3rd=row cell width 4th=Row height
+        })
+    })
+
+
+    doc.save('sample-file.pdf');
+}
+
+function tableToJson(table, table_savings) {
+var data = [];
+
+// first row needs to be headers
+var headers = [];
+for (var i=0; i<table.rows[0].cells.length; i++) {
+    headers[i] = table.rows[0].cells[i].innerHTML.toLowerCase().replace(/ /gi,'');
+}
+
+for (var i=0; i<table_savings.rows[0].cells.length; i++) {
+    headers[i] = table_savings.rows[0].cells[i].innerHTML.toLowerCase().replace(/ /gi,'');
+}
+
+
+// go through cells
+for (var i=0; i<table.rows.length; i++) {
+
+    var tableRow = table.rows[i];
+    var rowData = {};
+
+    for (var j=0; j<tableRow.cells.length; j++) {
+
+        rowData[ headers[j] ] = tableRow.cells[j].innerHTML;
+
+    }
+
+    data.push(rowData);
+}    
+
+for (var i=0; i<table_savings.rows.length; i++) {
+
+    var tableRow = table_savings.rows[i];
+    var rowData = {};
+
+    for (var j=0; j<tableRow.cells.length; j++) {
+
+        rowData[ headers[j] ] = tableRow.cells[j].innerHTML;
+
+    }
+
+    data.push(rowData);
+}    
+
+return data;
+}
+
 document.getElementById("username").innerHTML = localStorage.getItem("username");;
 
 const transactions = document.querySelector("#enter_transaction")
@@ -16,9 +82,6 @@ const checkingStartingBalance = document.querySelector("#checking_balance");
 const savingsStartingBalance = document.querySelector("#savings_balance");
 const balanceInfo = document.querySelector("#balance_info");
 
-function logout(){
-    location.href = "/HTML/login.html"
-}
 
 let checkingAccount = {
     // Checking account.

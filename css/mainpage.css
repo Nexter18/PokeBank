@@ -10,6 +10,8 @@
 
 body{
     background-image: url("/resources/2-27114_pokemon-bank-logo.png");
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .welcome h1{

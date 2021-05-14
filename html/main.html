@@ -7,13 +7,28 @@
     <link rel="stylesheet" href="/CSS/mainpage.css">
 </head>
 <body>
-    <div class="welcome">
+
+      <div class="welcome">
         <h1>Bienvenido <a id="username"></a></h1>
     </div>
 
     <div class="close">
         <p onclick="logout()">Cerrar Sesion</p>
     </div>
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-item nav-link" href="#" onclick="printPDF()">Transaction History</a>
+        <a class="nav-item nav-link" href="#">Charts</a>
+      </div>
+    </div>
+  </nav>
+    
     
 
     <div id="balance_info">
@@ -89,9 +104,12 @@
             </table>
         </div>
     </div>
-    
-</body>
-</html>
 
 <script type="text/javascript" src="/Scripts/MainScript.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"> </script>
+    
+</body>
+
+</html>
+
