@@ -1,16 +1,40 @@
-function logout(){
+document.getElementById("username").innerHTML = localStorage.getItem("username");;
+
+const transactions = document.querySelector("#enter_transaction")
+const transactionsSavings = document.querySelector("enter_transaction_savings");
+const transactionType = document.querySelector("#transaction_type")
+const transactionTypeSavings = document.querySelector("#transaction_type_savings");
+const transAmount = document.querySelector("#transaction_amount");
+const transAmountSavings = document.querySelector("#transaction_amount_savings");
+const transDescription = document.querySelector("#transaction_description");
+const transDescriptionSavings = document.querySelector("#transaction_description_savings");
+const table = document.querySelector("#trans_table");
+const tableSavings = document.querySelector("#trans_table_savings");
+const desc = document.querySelector("#desc");
+const descs = document.querySelector("#descs");
+const checkingStartingBalance = document.querySelector("#checking_balance");
+const savingsStartingBalance = document.querySelector("#savings_balance");
+const balanceInfo = document.querySelector("#balance_info");
+
+function logout() {
     location.href = "/HTML/login.html"
 }
 
-function printPDF(){
-    var doc = new jsPDF('p','pt', 'a4', true);
+function printPDF() {
+    var doc = new jsPDF('p', 'pt', 'a4', true);
     var table = tableToJson($('#trans_table').get(0))
     var table_savings = tableToJson($('#trans_table_savings').get(0))
     doc.cellInitialize();
-    $.each(table, table_savings, function (i, row){
+    $.each(table, function (i, row) {
         console.debug(row);
-        $.each(row, function (j, cell){
-            doc.cell(10, 50,120, 50, cell, i);  // 2nd parameter=top margin,1st=left margin 3rd=row cell width 4th=Row height
+        $.each(row, function (j, cell) {
+            doc.cell(10, 50, 145, 50, cell, i);  // 2nd parameter=top margin,1st=left margin 3rd=row cell width 4th=Row height
+        })
+    })
+    $.each(table_savings, function (i, row) {
+        console.debug(row);
+        $.each(row, function (j, cell) {
+            doc.cell(10, 50, 145, 50, cell, i);  // 2nd parameter=top margin,1st=left margin 3rd=row cell width 4th=Row height
         })
     })
 
@@ -18,70 +42,32 @@ function printPDF(){
     doc.save('sample-file.pdf');
 }
 
-function tableToJson(table, table_savings) {
-var data = [];
+function tableToJson(table) {
+    var data = [];
 
-// first row needs to be headers
-var headers = [];
-for (var i=0; i<table.rows[0].cells.length; i++) {
-    headers[i] = table.rows[0].cells[i].innerHTML.toLowerCase().replace(/ /gi,'');
-}
-
-for (var i=0; i<table_savings.rows[0].cells.length; i++) {
-    headers[i] = table_savings.rows[0].cells[i].innerHTML.toLowerCase().replace(/ /gi,'');
-}
-
-
-// go through cells
-for (var i=0; i<table.rows.length; i++) {
-
-    var tableRow = table.rows[i];
-    var rowData = {};
-
-    for (var j=0; j<tableRow.cells.length; j++) {
-
-        rowData[ headers[j] ] = tableRow.cells[j].innerHTML;
-
+    // first row needs to be headers
+    var headers = [];
+    for (var i = 0; i < table.rows[0].cells.length; i++) {
+        headers[i] = table.rows[0].cells[i].innerHTML.toLowerCase().replace(/ /gi, '');
     }
 
-    data.push(rowData);
-}    
+    // go through cells
+    for (var i = 0; i < table.rows.length; i++) {
 
-for (var i=0; i<table_savings.rows.length; i++) {
+        var tableRow = table.rows[i];
+        var rowData = {};
 
-    var tableRow = table_savings.rows[i];
-    var rowData = {};
+        for (var j = 0; j < tableRow.cells.length; j++) {
 
-    for (var j=0; j<tableRow.cells.length; j++) {
+            rowData[headers[j]] = tableRow.cells[j].innerHTML;
 
-        rowData[ headers[j] ] = tableRow.cells[j].innerHTML;
+        }
 
+        data.push(rowData);
     }
 
-    data.push(rowData);
-}    
-
-return data;
+    return data;
 }
-
-document.getElementById("username").innerHTML = localStorage.getItem("username");;
-
-const transactions = document.querySelector("#enter_transaction")
-const transactionsSavings = document.querySelector("enter_transaction_savings");
-const transactionType = document.querySelector("#transaction_type") 
-const transactionTypeSavings = document.querySelector("#transaction_type_savings");
-const transAmount = document.querySelector("#transaction_amount");
-const transAmountSavings = document.querySelector("#transaction_amount_savings");
-const transDescription = document.querySelector("#transaction_description");
-const transDescriptionSavings = document.querySelector("#transaction_description_savings");
-const table = document.querySelector("#trans_table");
-const tableSavings =  document.querySelector("#trans_table_savings");
-const desc = document.querySelector("#desc");
-const descs = document.querySelector("#descs");
-const checkingStartingBalance = document.querySelector("#checking_balance");
-const savingsStartingBalance = document.querySelector("#savings_balance");
-const balanceInfo = document.querySelector("#balance_info");
-
 
 let checkingAccount = {
     // Checking account.
@@ -101,7 +87,7 @@ let checkingAccount = {
             type: "withdrawal",
             amount: amount,
         })
-    },   
+    },
     debit: function (amount, purpose) {
         this.balance -= amount;
         this.allTransactions.push({
@@ -118,13 +104,13 @@ let checkingAccount = {
             amount: amount,
             purpose: "transfer",
         }),
-        this.allTransactions.push({
-            type: "transfer",
-            amount: amount,
-            purpose: "transfer",
-        })
+            this.allTransactions.push({
+                type: "transfer",
+                amount: amount,
+                purpose: "transfer",
+            })
     },
-    payment: function (amount,purpose) {
+    payment: function (amount, purpose) {
         this.balance -= amount;
         this.allTransactions.push({
             type: "payment",
@@ -152,7 +138,7 @@ let savingsAccount = {
             type: "withdrawal",
             amount: amount,
         })
-    },   
+    },
     debit: function (amount, purpose) {
         this.balance -= amount;
         this.allTransactions.push({
@@ -169,13 +155,13 @@ let savingsAccount = {
             amount: amount,
             purpose: "transfer",
         }),
-        this.allTransactions.push({
-            type: "transfer",
-            amount: amount,
-            purpose: "transfer",
-        })
+            this.allTransactions.push({
+                type: "transfer",
+                amount: amount,
+                purpose: "transfer",
+            })
     },
-    payment: function (amount,purpose) {
+    payment: function (amount, purpose) {
         this.balance -= amount;
         this.allTransactions.push({
             type: "payment",
@@ -189,14 +175,14 @@ hideStartingInfo(); // Call this at start to hide info until we need it.
 
 function hideStartingInfo() {
     // Hides savings/checking info and transaction info.
-    hideToggle(checking_info); 
-    hideToggle(savings_info); 
-    hideToggle(transactions);  
+    hideToggle(checking_info);
+    hideToggle(savings_info);
+    hideToggle(transactions);
 }
 
 function printTable(tableId, account, transferMessage) {
     // Prints items to table as they are entered.
-    let newRow = tableId.insertRow(-1);5
+    let newRow = tableId.insertRow(-1); 5
     let newCell1 = newRow.insertCell(0);
     let newCell2 = newRow.insertCell(1);
     let newCell3 = newRow.insertCell(2);
@@ -205,7 +191,7 @@ function printTable(tableId, account, transferMessage) {
     newCell3.innerHTML = account.allTransactions[account.allTransactions.length - 1].amount;
     newCell4.innerHTML = account.balance;
     if (account.allTransactions[account.allTransactions.length - 1].purpose != undefined) {
-        if(account.allTransactions[account.allTransactions.length - 1].purpose === "transfer") {
+        if (account.allTransactions[account.allTransactions.length - 1].purpose === "transfer") {
             newCell2.innerHTML = transferMessage;
         } else {
             newCell2.innerHTML = account.allTransactions[account.allTransactions.length - 1].purpose;
@@ -257,17 +243,17 @@ function runDebitChecking() {
     let forWhat = transDescription.value;
     if (isNaN(howMuch)) {
         alert("Ingrese la cantidad");
-        } else if (howMuch <= 0) {
-           alert("Ingrese numeros positivos.");
+    } else if (howMuch <= 0) {
+        alert("Ingrese numeros positivos.");
+    } else {
+        if (checkingAccount.balance >= howMuch) {
+            checkingAccount.debit(howMuch, forWhat);
+            displayAccountBalances();
+            printTable(table, checkingAccount);
         } else {
-            if (checkingAccount.balance >= howMuch) {
-                checkingAccount.debit(howMuch, forWhat);
-                displayAccountBalances();
-                printTable(table, checkingAccount);
-            } else {
-                alert("No tiene fondos suficientes para realizar el pago.")
-            }
+            alert("No tiene fondos suficientes para realizar el pago.")
         }
+    }
 }
 
 function runDepositChecking() {
@@ -275,13 +261,13 @@ function runDepositChecking() {
     let howMuch = Number.parseFloat(transAmount.value);
     if (isNaN(howMuch)) {
         alert("Ingrese la cantidad");
-        } else if (howMuch <= 0) {
-            alert("Ingrese numeros positivos.")
-        } else {
-            checkingAccount.deposit(howMuch);
-            displayAccountBalances();
-            printTable(table, checkingAccount);
-        } 
+    } else if (howMuch <= 0) {
+        alert("Ingrese numeros positivos.")
+    } else {
+        checkingAccount.deposit(howMuch);
+        displayAccountBalances();
+        printTable(table, checkingAccount);
+    }
 }
 
 function runDepositSavings() {
@@ -289,13 +275,13 @@ function runDepositSavings() {
     let howMuch = Number.parseFloat(transAmountSavings.value);
     if (isNaN(howMuch)) {
         alert("Ingrese la cantidad");
-        } else if (howMuch <= 0) {
-            alert("Ingrese numeros positivos.")
-        } else {
-            savingsAccount.deposit(howMuch);
-            displayAccountBalances(); 
-            printTable(tableSavings, savingsAccount);
-        } 
+    } else if (howMuch <= 0) {
+        alert("Ingrese numeros positivos.")
+    } else {
+        savingsAccount.deposit(howMuch);
+        displayAccountBalances();
+        printTable(tableSavings, savingsAccount);
+    }
 }
 
 function runWithdrawChecking() {
@@ -303,17 +289,17 @@ function runWithdrawChecking() {
     let howMuch = Number.parseFloat(transAmount.value);
     if (isNaN(howMuch)) {
         alert("Ingrese la cantidad");
-        } else if (howMuch <= 0) {
-            alert("Ingrese numeros positivos.");
+    } else if (howMuch <= 0) {
+        alert("Ingrese numeros positivos.");
+    } else {
+        if (checkingAccount.balance >= howMuch) {
+            checkingAccount.withdraw(howMuch);
+            displayAccountBalances();
+            printTable(table, checkingAccount);
         } else {
-            if (checkingAccount.balance >= howMuch) {
-                checkingAccount.withdraw(howMuch);
-                displayAccountBalances();
-                printTable(table, checkingAccount);
-            } else {
-                alert("No tiene fondos suficientes para realizar el pago.")
-            }
-    }  
+            alert("No tiene fondos suficientes para realizar el pago.")
+        }
+    }
 }
 
 function runWithdrawSavings() {
@@ -321,17 +307,17 @@ function runWithdrawSavings() {
     let howMuch = Number.parseFloat(transAmountSavings.value);
     if (isNaN(howMuch)) {
         alert("Ingrese la cantidad");
-        } else if (howMuch <= 0) {
-            alert("Ingrese numeros positivos.");
+    } else if (howMuch <= 0) {
+        alert("Ingrese numeros positivos.");
+    } else {
+        if (savingsAccount.balance >= howMuch) {
+            savingsAccount.withdraw(howMuch);
+            displayAccountBalances();
+            printTable(tableSavings, savingsAccount);
         } else {
-            if (savingsAccount.balance >= howMuch) {
-                savingsAccount.withdraw(howMuch);
-                displayAccountBalances();
-                printTable(tableSavings, savingsAccount);
-            } else {
-                alert("No tiene fondos suficientes para realizar el pago.")
-            }
-    }  
+            alert("No tiene fondos suficientes para realizar el pago.")
+        }
+    }
 }
 
 function runTransferChecking() {
@@ -339,18 +325,18 @@ function runTransferChecking() {
     let howMuch = Number.parseFloat(transAmount.value);
     if (isNaN(howMuch)) {
         alert("Ingrese la cantidad");
-        } else if (howMuch <= 0) {
-            alert("Ingrese numeros positivos.");
+    } else if (howMuch <= 0) {
+        alert("Ingrese numeros positivos.");
+    } else {
+        if (checkingAccount.balance >= howMuch) {
+            checkingAccount.transfer(howMuch, savingsAccount);
+            displayAccountBalances();
+            printTable(table, checkingAccount, "Transfer to Savings");
+            printTable(tableSavings, savingsAccount, "Transfer from Checking");
         } else {
-            if (checkingAccount.balance >= howMuch) {
-                checkingAccount.transfer(howMuch, savingsAccount);
-                displayAccountBalances();
-                printTable(table, checkingAccount, "Transfer to Savings");
-                printTable(tableSavings, savingsAccount, "Transfer from Checking");
-            } else {
-                alert("No tiene fondos suficientes para realizar el pago.")
-            }
-    }  
+            alert("No tiene fondos suficientes para realizar el pago.")
+        }
+    }
 }
 
 function runTransferSavings() {
@@ -358,18 +344,18 @@ function runTransferSavings() {
     let howMuch = Number.parseFloat(transAmountSavings.value);
     if (isNaN(howMuch)) {
         alert("Ingrese la cantidad");
-        } else if (howMuch <= 0) {
-            alert("Ingrese numeros positivos.");
+    } else if (howMuch <= 0) {
+        alert("Ingrese numeros positivos.");
+    } else {
+        if (savingsAccount.balance >= howMuch) {
+            savingsAccount.transfer(howMuch, checkingAccount);
+            displayAccountBalances();
+            printTable(tableSavings, savingsAccount, "Transfer to Checking");
+            printTable(table, checkingAccount, "Transfer from Savings");
         } else {
-            if (savingsAccount.balance >= howMuch) {
-                savingsAccount.transfer(howMuch, checkingAccount);
-                displayAccountBalances();
-                printTable(tableSavings, savingsAccount, "Transfer to Checking");
-                printTable(table, checkingAccount, "Transfer from Savings");
-            } else {
-                alert("No tiene fondos suficientes para realizar el pago.")
-            }
-    }  
+            alert("No tiene fondos suficientes para realizar el pago.")
+        }
+    }
 }
 
 function runPaymentChecking() {
@@ -378,17 +364,17 @@ function runPaymentChecking() {
     let forWhat = transDescription.value;
     if (isNaN(howMuch)) {
         alert("Ingrese la cantidad");
-        } else if (howMuch <= 0) {
-           alert("Ingrese numeros positivos.");
+    } else if (howMuch <= 0) {
+        alert("Ingrese numeros positivos.");
+    } else {
+        if (checkingAccount.balance >= howMuch) {
+            checkingAccount.debit(howMuch, forWhat);
+            displayAccountBalances();
+            printTable(table, checkingAccount, "Pago realizado con exito");
         } else {
-            if (checkingAccount.balance >= howMuch) {
-                checkingAccount.debit(howMuch, forWhat);
-                displayAccountBalances();
-                printTable(table, checkingAccount, "Pago realizado con exito");
-            } else {
-                alert("No tiene suficientes fondos para el pago.")
-            }
+            alert("No tiene suficientes fondos para el pago.")
         }
+    }
 }
 
 function runPaymentSavings() {
@@ -397,20 +383,20 @@ function runPaymentSavings() {
     let forWhat = transDescriptionSavings.value;
     if (isNaN(howMuch)) {
         alert("Ingrese la cantidad");
-        } else if (howMuch <= 0) {
-           alert("Ingrese numeros positivos.");
+    } else if (howMuch <= 0) {
+        alert("Ingrese numeros positivos.");
+    } else {
+        if (savingsAccount.balance >= howMuch) {
+            savingsAccount.debit(howMuch, forWhat);
+            displayAccountBalances();
+            printTable(tableSavings, savingsAccount, "Pago realizado con exito");
         } else {
-            if (savingsAccount.balance >= howMuch) {
-                savingsAccount.debit(howMuch,forWhat);
-                displayAccountBalances();
-                printTable(tableSavings, savingsAccount, "Pago realizado con exito");
-            } else {
-                alert("No tiene suficientes fondos para el pago.")
-            }
+            alert("No tiene suficientes fondos para el pago.")
         }
+    }
 }
 
-function displayAccountBalances () {
+function displayAccountBalances() {
     // Displays current balance of both accounts.
     document.querySelector("#current_checking_balance").textContent = "Balance Actual: $" + checkingAccount.balance;
     document.querySelector("#current_savings_balance").textContent = "Balance Actual: $" + savingsAccount.balance;
@@ -433,7 +419,7 @@ function getStartingBalance() {
         hideToggle(savings_info);
         hideToggle(transactions);
         hideToggle(balanceInfo);
-    } 
+    }
 }
 
 function clearBox(elementID) {
